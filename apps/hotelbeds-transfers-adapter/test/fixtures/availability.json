@@ -1,0 +1,88 @@
+{
+  "search": {
+    "language": "en",
+    "departure": { "date": "2027-03-12", "time": "14:30:00" },
+    "comeBack": { "date": "0001-01-01", "time": "00:00:00" },
+    "occupancy": { "adults": 2, "children": 0, "infants": 0 },
+    "from": { "code": "BCN", "description": "Barcelona Airport", "type": "IATA" },
+    "to": { "code": "57", "description": "Barcelona Universal", "type": "ATLAS" }
+  },
+  "services": [
+    {
+      "id": 0,
+      "direction": "ARRIVAL",
+      "transferType": "PRIVATE",
+      "vehicle": { "code": "CR", "name": "Car" },
+      "category": { "code": "PRM", "name": "Premium" },
+      "pickupInformation": {
+        "from": { "code": "BCN", "description": "Barcelona Airport", "type": "IATA" },
+        "to": { "code": "57", "description": "Barcelona Universal", "type": "ATLAS" },
+        "date": "2027-03-12",
+        "time": "14:30:00",
+        "pickup": {
+          "address": null,
+          "number": null,
+          "town": null,
+          "zip": null,
+          "description": "Once you have collected your luggage, a staff member will be waiting for you at the Arrivals Hall with a sign with your name on it.",
+          "altitude": null,
+          "latitude": 41.2974,
+          "longitude": 2.0833,
+          "checkPickup": { "mustCheckPickupTime": false, "url": null, "hoursBeforeConsulting": null },
+          "pickupId": null,
+          "stopName": null,
+          "image": null
+        }
+      },
+      "minPaxCapacity": 1,
+      "maxPaxCapacity": 3,
+      "content": {
+        "vehicle": { "code": "CR", "name": "Car" },
+        "category": { "code": "PRM", "name": "Premium" },
+        "images": [
+          { "url": "https://assets.holidaytaxis.com/imgs/vehicles/prm-cr.png", "type": "SMALL" }
+        ],
+        "transferDetailInfo": [
+          { "id": "ER", "name": "Exclusive ride for you", "description": null, "type": "GENERAL_INFO" },
+          { "id": "DTDS", "name": "Door to door service", "description": null, "type": "GENERAL_INFO" }
+        ],
+        "customerTransferTimeInfo": [],
+        "supplierTransferTimeInfo": [
+          { "value": 60, "type": "SUPPLIER_MAX_WAITING_TIME_DOMESTIC", "metric": "minutes" }
+        ],
+        "transferRemarks": [
+          { "type": "CONTRACT", "description": "Pickup point\nArrivals hall.", "mandatory": true }
+        ]
+      },
+      "price": { "totalAmount": 68.42, "netAmount": null, "currencyId": "EUR" },
+      "rateKey": "ARRIVAL|IATA|BCN|ATLAS|57|2027-03-12|14:30|2027-03-12|14:30|2~0~0||4|163|PRM|CR|PRVT|102|BCN-P|SIMPLE|a61d2f0c-7f31|1|68.42|EUR|9f2c",
+      "cancellationPolicies": [
+        { "amount": 68.42, "from": "2027-03-11T14:30:00", "currencyId": "EUR", "isForceMajeure": null }
+      ],
+      "links": [
+        { "rel": "transferRemarks", "href": "/remarks", "method": "GET" }
+      ],
+      "factsheetId": 163
+    },
+    {
+      "id": 1,
+      "direction": "ARRIVAL",
+      "transferType": "SHARED",
+      "vehicle": { "code": "SH", "name": "Shuttle" },
+      "category": { "code": "STND", "name": "Standard" },
+      "pickupInformation": {
+        "from": { "code": "BCN", "description": "Barcelona Airport", "type": "IATA" },
+        "to": { "code": "57", "description": "Barcelona Universal", "type": "ATLAS" },
+        "date": "2027-03-12",
+        "time": "14:30:00",
+        "pickup": null
+      },
+      "minPaxCapacity": 1,
+      "maxPaxCapacity": 16,
+      "price": { "totalAmount": 24.28, "netAmount": null, "currencyId": "EUR" },
+      "rateKey": "ARRIVAL|IATA|BCN|ATLAS|57|2027-03-12|14:30|2027-03-12|14:30|2~0~0||4|39|STND|SH|SHRD|102|BCN-S|SIMPLE|b7c4e1a2-11d9|1|24.28|EUR|41ab",
+      "cancellationPolicies": [],
+      "factsheetId": 39
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+name: transfer-booking-service
+
+x-service: &service
+  image: transfer-booking-service:local
+  build: .
+  restart: unless-stopped
+  env_file:
+    - path: .env
+      required: false
+  depends_on:
+    rabbitmq:
+      condition: service_healthy
+
+services:
+  rabbitmq:
+    image: rabbitmq:4-management-alpine
+    ports:
+      - "${RABBITMQ_MANAGEMENT_PORT:-15674}:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: booking
+      POSTGRES_PASSWORD: booking
+      POSTGRES_DB: bookings
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U booking -d bookings"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  gateway:
+    <<: *service
+    command: ["node", "dist/apps/gateway/main.js"]
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+      PORT: "3000"
+    ports:
+      - "${GATEWAY_PORT:-8082}:3000"
+
+  booking:
+    <<: *service
+    command: ["node", "dist/apps/booking/main.js"]
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+      DATABASE_URL: postgres://booking:booking@postgres:5432/bookings
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  hotelbeds-transfers-adapter:
+    <<: *service
+    command: ["node", "dist/apps/hotelbeds-transfers-adapter/main.js"]
+    environment:
+      RABBITMQ_URL: amqp://guest:guest@rabbitmq:5672
+
+volumes:
+  rabbitmq-data:
+  postgres-data:
